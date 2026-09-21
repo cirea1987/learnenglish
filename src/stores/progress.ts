@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { storage } from '@/utils/storage'
+import { levels } from '@/data/levels'
 
 export interface LevelProgress {
   stars: number
@@ -24,6 +25,17 @@ export const useProgressStore = defineStore('progress', {
   actions: {
     completeLevel(levelId: string, stars: number) {
       this.levels[levelId] = { stars, completed: true, completedAt: Date.now() }
+      this.save()
+    },
+    unlockNextLevel(levelId: string) {
+      const current = levels.find((l) => l.id === levelId)
+      const nextId = current?.next
+      if (!nextId) return
+      const next = levels.find((l) => l.id === nextId)
+      if (next) {
+        next.unlocked = true
+        this.setCurrentLevel(nextId)
+      }
       this.save()
     },
     learnLetter(letter: string) {
