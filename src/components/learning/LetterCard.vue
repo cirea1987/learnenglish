@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Letter } from '@/data/letters'
-import { speak } from '@/utils/speak'
+import { playAudio } from '@/utils/audio'
 const props = defineProps<{ letter: Letter }>()
 const emojiMap: Record<string, string> = {
   apple: '🍎', bee: '🐝', cat: '🐱', dog: '🐶', egg: '🥚',
@@ -11,10 +11,10 @@ const emojiMap: Record<string, string> = {
 }
 const emoji = emojiMap[props.letter.example.word] || props.letter.example.word[0]?.toUpperCase()
 function playName() {
-  speak(`${props.letter.upper}, ${props.letter.example.word}`)
+  playAudio(props.letter.nameAudio, 0.8, props.letter.upper)
 }
 function playSound() {
-  speak(`${props.letter.upper} says ${props.letter.soundIpa}, ${props.letter.example.word}`)
+  playAudio(props.letter.soundAudio, 0.8, `${props.letter.upper} says ${props.letter.soundIpa}`)
 }
 </script>
 

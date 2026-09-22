@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { speak } from '@/utils/speak'
-const props = defineProps<{ text: string; label?: string }>()
-function play() { speak(props.text) }
+import { playAudio } from '@/utils/audio'
+const props = defineProps<{ text: string; label?: string; audioSrc?: string }>()
+function play() {
+  if (props.audioSrc) {
+    playAudio(props.audioSrc, 0.8, props.text)
+  } else {
+    speak(props.text)
+  }
+}
 </script>
 
 <template>

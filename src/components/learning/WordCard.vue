@@ -34,7 +34,7 @@ function listen() {
     <div class="image">{{ word.word }}</div>
     <div class="word">{{ word.word }}</div>
     <div class="cn">{{ word.cn }}</div>
-    <AudioButton :text="word.sentence" :label="'听句子'" />
+    <AudioButton :text="word.sentence" :audio-src="word.sentenceAudio" :label="'听句子'" />
     <button class="speak-btn" :disabled="listening" @click="listen">{{ listening ? '听你说…' : '跟读' }}</button>
     <p v-if="result" class="result">{{ result }}</p>
   </div>
