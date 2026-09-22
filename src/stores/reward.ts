@@ -46,6 +46,14 @@ export const useRewardStore = defineStore('reward', {
         this.save()
       }
     },
+    syncBadges(learnedLetters: string[], completedLevelCount: number, hasPhonicsLevel: boolean) {
+      if (this.stars > 0) this.addBadge('first')
+      if (learnedLetters.length >= 5) this.addBadge('sound')
+      if (this.stars >= 20) this.addBadge('star')
+      if (learnedLetters.length >= 26) this.addBadge('letter')
+      if (hasPhonicsLevel) this.addBadge('phonics')
+      if (completedLevelCount >= 5) this.addBadge('champion')
+    },
     feedPet() {
       if (this.coins >= 10) {
         this.coins -= 10

@@ -17,7 +17,7 @@ const emojiMap: Record<string, string> = {
   whale: '🐋', worm: '🐛', watch: '⌚', fox: '🦊', box: '📦', xylophone: '🎹',
   'yo-yo': '🪀', yak: '🦬', yarn: '🧶', zebra: '🦓', zip: '🤐', zoo: '🦁'
 }
-const emoji = emojiMap[data.examples[0]] || data.letter
+const emoji = emojiMap[props.data.examples[0]] || props.data.letter
 function playSentence() {
   speak(props.data.sentence)
 }
@@ -28,12 +28,12 @@ function playSound() {
 
 <template>
   <div class="sound-card" @click="playSentence">
-    <div class="letter">{{ data.letter }}</div>
+    <div class="letter">{{ props.data.letter }}</div>
     <button class="sound-btn" @click.stop="playSound">🔊 字母音</button>
-    <p class="sentence">{{ data.sentence }}</p>
+    <p class="sentence">{{ props.data.sentence }}</p>
     <div class="example">
       <span class="emoji">{{ emoji }}</span>
-      <span class="word">{{ data.examples[0] }}</span>
+      <span class="word">{{ props.data.examples[0] }}</span>
     </div>
   </div>
 </template>

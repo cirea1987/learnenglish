@@ -1,3 +1,5 @@
+import { useSettingsStore } from '@/stores/settings'
+
 // 用 Web Audio API 生成简单音效，无需外部音频文件
 function getAudioCtx(): AudioContext | null {
   if (typeof window === 'undefined') return null
@@ -7,6 +9,8 @@ function getAudioCtx(): AudioContext | null {
 }
 
 function beep(freq: number, duration: number, type: OscillatorType = 'sine', delay = 0) {
+  const settings = useSettingsStore()
+  if (!settings.soundEnabled || settings.volume <= 0) return
   const audioCtx = getAudioCtx()
   if (!audioCtx) return
   if (audioCtx.state === 'suspended') audioCtx.resume()
@@ -14,7 +18,7 @@ function beep(freq: number, duration: number, type: OscillatorType = 'sine', del
   const gain = audioCtx.createGain()
   osc.type = type
   osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay)
-  gain.gain.setValueAtTime(0.3, audioCtx.currentTime + delay)
+  gain.gain.setValueAtTime(0.3 * settings.volume, audioCtx.currentTime + delay)
   gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + delay + duration)
   osc.connect(gain)
   gain.connect(audioCtx.destination)

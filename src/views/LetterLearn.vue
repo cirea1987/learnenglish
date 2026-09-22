@@ -7,11 +7,13 @@ import Confetti from '@/components/reward/Confetti.vue'
 import { letters } from '@/data/letters'
 import { levels } from '@/data/levels'
 import { useProgressStore } from '@/stores/progress'
+import { useRewardStore } from '@/stores/reward'
 import { speak } from '@/utils/speak'
 import { playComplete } from '@/utils/sfx'
 
 const route = useRoute()
 const progress = useProgressStore()
+const reward = useRewardStore()
 const level = computed(() => levels.find((l) => l.id === route.params.id) || levels[0])
 const levelLetters = computed(() => letters.filter((l) => level.value.letters?.includes(l.upper)))
 const praise = ref('')
@@ -19,8 +21,13 @@ const showConfetti = ref(false)
 const praises = ['Great job!', 'Well done!', 'You are awesome!', 'Fantastic!', 'Super star!']
 
 function done() {
+  const alreadyCompleted = progress.levels[level.value.id]?.completed === true
   levelLetters.value.forEach((l) => progress.learnLetter(l.upper))
   progress.completeLevel(level.value.id, 3)
+  if (!alreadyCompleted) {
+    reward.addStars(3)
+    reward.addCoins(10)
+  }
   progress.unlockNextLevel(level.value.id)
   praise.value = praises[Math.floor(Math.random() * praises.length)]
   showConfetti.value = true

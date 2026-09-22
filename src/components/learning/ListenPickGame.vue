@@ -2,13 +2,11 @@
 import { ref, computed } from 'vue'
 import { speak } from '@/utils/speak'
 import { shuffle } from '@/utils/shuffle'
-import { useRewardStore } from '@/stores/reward'
 import { playCorrect, playWrong } from '@/utils/sfx'
 import Confetti from '@/components/reward/Confetti.vue'
 
 const props = defineProps<{ target: string; options: string[] }>()
 const emit = defineEmits<{ (e: 'correct'): void; (e: 'wrong'): void }>()
-const reward = useRewardStore()
 
 const shuffled = computed(() => shuffle(props.options))
 const chosen = ref('')

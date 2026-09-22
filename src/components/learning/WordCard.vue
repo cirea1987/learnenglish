@@ -3,20 +3,29 @@ import type { Word } from '@/data/words'
 import AudioButton from './AudioButton.vue'
 import { recognize } from '@/utils/recognize'
 import { useRewardStore } from '@/stores/reward'
+import { useDailyStore } from '@/stores/daily'
 import { ref } from 'vue'
 const props = defineProps<{ word: Word }>()
 const reward = useRewardStore()
+const daily = useDailyStore()
 const result = ref('')
 const listening = ref(false)
 
 function listen() {
   listening.value = true
   result.value = ''
-  recognize(props.word.word, (score, said) => {
+  const started = recognize(props.word.word, (score, said) => {
     listening.value = false
     result.value = score >= 2 ? '太棒了，跟读成功！' : `我听到的是 "${said}"，再试一次`
-    if (score >= 2) reward.addStars(1)
+    if (score >= 2) {
+      reward.addStars(1)
+      daily.record('readAloud')
+    }
   })
+  if (!started) {
+    listening.value = false
+    result.value = '当前浏览器不支持语音识别，请点击听音后自评。'
+  }
 }
 </script>
 

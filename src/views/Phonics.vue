@@ -8,6 +8,7 @@ import { phonics, getPhonicEmoji } from '@/data/phonics'
 import { levels } from '@/data/levels'
 import { useProgressStore } from '@/stores/progress'
 import { useRewardStore } from '@/stores/reward'
+import { useDailyStore } from '@/stores/daily'
 import { speak } from '@/utils/speak'
 import { playComplete } from '@/utils/sfx'
 
@@ -15,6 +16,7 @@ const route = useRoute()
 const router = useRouter()
 const progress = useProgressStore()
 const reward = useRewardStore()
+const daily = useDailyStore()
 const level = computed(() => levels.find((l) => l.id === route.params.id) || levels.find((l) => l.type === 'phonics')!)
 const list = computed(() => phonics.filter((p) => level.value.phonics?.includes(p.id)))
 const index = ref(0)
@@ -40,9 +42,11 @@ function finish() {
   finished.value = true
   showConfetti.value = true
   const stars = Math.min(3, Math.max(1, list.value.length))
-  progress.completeLevel(level.value.id, stars)
-  reward.addStars(stars)
-  reward.addCoins(10)
+  if (progress.completeLevel(level.value.id, stars)) {
+    reward.addStars(stars)
+    reward.addCoins(10)
+    daily.record('words', list.value.length)
+  }
   progress.unlockNextLevel(level.value.id)
   playComplete()
   speak('Great job! You finished this level!')

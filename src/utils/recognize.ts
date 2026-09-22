@@ -3,8 +3,7 @@ import { calcScore } from './score'
 export function recognize(target: string, onResult: (score: number, said: string) => void) {
   const Ctor = window.SpeechRecognition || window.webkitSpeechRecognition
   if (!Ctor) {
-    onResult(0, '')
-    return
+    return false
   }
   const rec = new Ctor()
   rec.lang = 'en-US'
@@ -17,4 +16,5 @@ export function recognize(target: string, onResult: (score: number, said: string
   }
   rec.onerror = () => onResult(0, '')
   rec.start()
+  return true
 }

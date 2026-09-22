@@ -6,16 +6,17 @@ import LetterSoundCard from '@/components/learning/LetterSoundCard.vue'
 import ListenPickGame from '@/components/learning/ListenPickGame.vue'
 import { levels } from '@/data/levels'
 import { letterSounds } from '@/data/letterSounds'
-import { letters } from '@/data/letters'
 import { shuffle } from '@/utils/shuffle'
 import { speak } from '@/utils/speak'
 import { useProgressStore } from '@/stores/progress'
 import { useRewardStore } from '@/stores/reward'
+import { useDailyStore } from '@/stores/daily'
 
 const route = useRoute()
 const router = useRouter()
 const progress = useProgressStore()
 const reward = useRewardStore()
+const daily = useDailyStore()
 const level = computed(() => levels.find((l) => l.id === route.params.id) || levels.find((l) => l.type === 'letterSound')!)
 const targets = computed(() => letterSounds.filter((s) => level.value.letters?.includes(s.letter)))
 const phase = ref<'learn' | 'game' | 'done'>('learn')
@@ -23,9 +24,8 @@ const index = ref(0)
 const correctCount = ref(0)
 
 const current = computed(() => targets.value[index.value])
-const currentLetter = computed(() => letters.find((l) => l.upper === current.value.letter)!)
 const options = computed(() => {
-  const pool = letters.map((l) => l.upper).filter((l) => l !== current.value.letter)
+  const pool = letterSounds.map((l) => l.letter).filter((l) => l !== current.value.letter)
   return shuffle([current.value.letter, ...shuffle(pool).slice(0, 2)])
 })
 
@@ -41,9 +41,11 @@ function next() {
     index.value++
   } else {
     const stars = Math.min(3, Math.max(1, correctCount.value))
-    progress.completeLevel(level.value.id, stars)
-    reward.addStars(stars)
-    reward.addCoins(10)
+    if (progress.completeLevel(level.value.id, stars)) {
+      reward.addStars(stars)
+      reward.addCoins(10)
+      daily.record('letters', targets.value.length)
+    }
     progress.unlockNextLevel(level.value.id)
     phase.value = 'done'
     speak('Great job! You finished this level!')
@@ -79,7 +81,7 @@ function goHome() {
         <div class="done-panel">
           <div class="trophy">🏆</div>
           <h2>关卡完成！</h2>
-          <p>获得 {{ Math.min(3, Math.max(1, correctCount.value)) }} 颗星星 + 10 金币</p>
+          <p>获得 {{ Math.min(3, Math.max(1, correctCount)) }} 颗星星 + 10 金币</p>
           <button class="primary-btn" @click="goHome">返回地图</button>
         </div>
       </template>

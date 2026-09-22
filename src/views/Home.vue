@@ -11,16 +11,17 @@ const progress = useProgressStore()
     <section class="hero">
       <p class="eyebrow">今天的拼读小任务 · 3分钟</p>
       <h1>嗨，{{ progress.learnedLetters.length ? '拼读小达人' : '小小拼读家' }}！<br /><em>今天也来收集声音吧</em></h1>
-      <div class="streak"><span>♨</span><div><strong>3 天</strong><small>连续学习</small></div></div>
+      <div class="streak"><span>♨</span><div><strong>{{ progress.streakDays }} 天</strong><small>连续学习</small></div></div>
     </section>
     <section class="level-list">
       <h2>我的拼读地图</h2>
-      <RouterLink v-for="level in levels" :key="level.id" :to="`/${level.type === 'letterLearn' ? 'letter' : level.type === 'letterSound' ? 'sound' : level.type}/${level.id}`" class="level-card" :class="{ locked: !level.unlocked }">
+      <RouterLink v-for="level in levels" :key="level.id" :to="`/${level.type === 'letterLearn' ? 'letter' : level.type === 'letterSound' ? 'sound' : level.type}/${level.id}`" class="level-card" :class="{ locked: !progress.isLevelUnlocked(level.id) }">
         <div class="badge">{{ level.type === 'letterLearn' ? '🔤' : level.type === 'letterSound' ? '🔊' : level.type === 'phonics' ? '🧩' : level.type === 'syllable' ? '👏' : '📖' }}</div>
         <div class="info"><strong>{{ level.chapter }}</strong><span>{{ level.title }}</span></div>
         <div class="stars">{{ (progress.levels[level.id]?.stars ?? 0) }} / {{ level.stars }} ★</div>
       </RouterLink>
     </section>
+    <RouterLink to="/review" class="review-link">🔁 复习已经学过的内容</RouterLink>
     <nav class="bottom-nav">
       <RouterLink to="/" class="active">🏠 首页</RouterLink>
       <RouterLink to="/letter">🔤 字母</RouterLink>
@@ -48,6 +49,7 @@ h1 em { color: #59728b; font-size: .7em; font-style: normal; font-weight: 500; }
 .info strong { color: #263b54; font-size: 15px; }
 .info span { color: #718093; font-size: 12px; }
 .stars { color: #f6b62c; font-weight: 700; font-size: 13px; }
+.review-link { display: block; margin: 4px 20px 18px; padding: 14px; border-radius: 16px; background: #e0f5e8; color: #2f7a5e; text-align: center; text-decoration: none; font-weight: 700; box-shadow: 0 4px 0 #c3e5d4; }
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; padding: 10px 0 calc(10px + env(safe-area-inset-bottom)); background: #fff; box-shadow: 0 -3px 12px rgba(0,0,0,.06); }
 .bottom-nav a { color: #8b98a8; text-decoration: none; font-size: 12px; font-weight: 700; }
 .bottom-nav a.active { color: #ff6b6b; }
