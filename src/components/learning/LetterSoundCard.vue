@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LetterSound } from '@/data/letterSounds'
-import { speak } from '@/utils/speak'
+import { playAudio } from '@/utils/audio'
 const props = defineProps<{ data: LetterSound }>()
 const emojiMap: Record<string, string> = {
   apple: '🍎', ant: '🐜', ax: '🪓', bee: '🐝', bird: '🐦', ball: '⚽',
@@ -19,10 +19,10 @@ const emojiMap: Record<string, string> = {
 }
 const emoji = emojiMap[props.data.examples[0]] || props.data.letter
 function playSentence() {
-  speak(props.data.sentence)
+  playAudio(props.data.sentenceAudio, 0.8, props.data.sentence)
 }
 function playSound() {
-  speak(props.data.sound)
+  playAudio(props.data.audio, 0.8, props.data.sound)
 }
 </script>
 

@@ -91,13 +91,19 @@ function goHome() {
 
 <style scoped>
 .page { min-height: 100vh; background: #fff8e8; }
-.stage { padding: 30px 20px; display: grid; gap: 18px; }
+.stage { width: min(100%, 1040px); min-height: calc(100vh - 72px); margin: 0 auto; padding: 30px 20px 72px; display: grid; align-content: start; gap: 18px; }
 .tip { text-align: center; color: #8b98a8; font-size: 14px; }
 .learn-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
 .count { text-align: center; color: #8b98a8; font-size: 13px; }
 .primary-btn { display: block; width: 100%; padding: 16px; border-radius: 18px; background: #68c986; color: #fff; font-size: 18px; font-weight: 700; box-shadow: 0 5px 0 #48ad69; }
-.done-panel { display: grid; justify-items: center; gap: 14px; padding: 40px 24px; border-radius: 24px; background: #fff; box-shadow: 0 6px 0 #eee4d2; }
-.trophy { font-size: 72px; }
-.done-panel h2 { margin: 0; color: #263b54; font-size: 24px; }
-.done-panel p { color: #718093; }
+.done-panel { display: grid; justify-items: center; gap: 14px; width: min(100%, 680px); margin: 0 auto; padding: 44px 28px 34px; border-radius: 24px; background: #fff; box-shadow: 0 6px 0 #eee4d2; text-align: center; }
+.trophy { display: block; height: 82px; font-size: 72px; line-height: 1; }
+.done-panel h2 { margin: 0; color: #263b54; font-size: 24px; line-height: 1.35; }
+.done-panel p { margin: 0; color: #718093; line-height: 1.5; }
+
+@media (max-width: 520px) {
+  .stage { padding: 22px 16px 56px; }
+  .done-panel { padding: 36px 20px 28px; }
+  .trophy { height: 72px; font-size: 62px; }
+}
 </style>

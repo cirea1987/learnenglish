@@ -30,7 +30,7 @@ export const levels: Level[] = [
   { id: 'L3-4', chapter: '自然拼读', title: '-og / -ot / -op', type: 'phonics', phonics: ['cvc-og-1', 'cvc-og-2', 'cvc-og-3', 'cvc-ot-1', 'cvc-ot-2', 'cvc-ot-3', 'cvc-op-1', 'cvc-op-2', 'cvc-op-3'], stars: 3, unlocked: false, next: 'L3-5' },
   { id: 'L3-5', chapter: '自然拼读', title: '-ug / -un / -ut', type: 'phonics', phonics: ['cvc-ug-1', 'cvc-ug-2', 'cvc-ug-3', 'cvc-un-1', 'cvc-un-2', 'cvc-un-3', 'cvc-ut-1', 'cvc-ut-2', 'cvc-ut-3'], stars: 3, unlocked: false, next: 'L4-1' },
   // 音节拼读
-  { id: 'L4-1', chapter: '音节拼读', title: '拍手数音节', type: 'syllable', words: ['rabbit'], stars: 3, unlocked: false, next: 'L5-1' },
+  { id: 'L4-1', chapter: '音节拼读', title: '动物和生活中的音节', type: 'syllable', words: ['rabbit', 'elephant', 'sunset', 'picnic', 'tiger', 'banana', 'tomato'], stars: 3, unlocked: false, next: 'L5-1' },
   // 单词与短句
-  { id: 'L5-1', chapter: '单词与短句', title: '我会说句子', type: 'word', words: ['word-cat', 'word-sun'], stars: 3, unlocked: false },
+  { id: 'L5-1', chapter: '单词与短句', title: '生活中的小句子', type: 'word', words: ['word-cat', 'word-sun', 'word-dog', 'word-apple', 'word-fish', 'word-red', 'word-big', 'word-run', 'word-book', 'word-happy'], stars: 3, unlocked: false },
 ]

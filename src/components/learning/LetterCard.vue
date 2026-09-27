@@ -13,6 +13,9 @@ const emoji = emojiMap[props.letter.example.word] || props.letter.example.word[0
 function playName() {
   playAudio(props.letter.nameAudio, 0.8, props.letter.upper)
 }
+function playExample() {
+  playAudio(props.letter.example.audio, 0.8, props.letter.example.word)
+}
 function playSound() {
   playAudio(props.letter.soundAudio, 0.8, `${props.letter.upper} says ${props.letter.soundIpa}`)
 }
@@ -22,10 +25,10 @@ function playSound() {
   <div class="letter-card" @click="playName">
     <div class="upper">{{ letter.upper }}</div>
     <div class="lower">{{ letter.lower }}</div>
-    <div class="example-img">
+    <div class="example-img" @click.stop="playExample">
       <span class="emoji">{{ emoji }}</span>
     </div>
-    <div class="example">{{ letter.example.word }}</div>
+    <div class="example" @click.stop="playExample">{{ letter.example.word }}</div>
     <button class="sound-btn" @click.stop="playSound">🔊</button>
   </div>
 </template>

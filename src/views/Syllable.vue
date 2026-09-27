@@ -39,6 +39,7 @@ function goHome() {
     <TopBar :title="level.title" show-back />
     <section class="stage">
       <template v-if="!finished">
+        <div class="lesson-intro"><strong>拍拍手，数一数有几个音节</strong><small>先点每一块，再点击“一起拼”听完整单词</small></div>
         <SyllableSplit v-for="item in list" :key="item.word" :syllable="item" />
         <button class="finish-btn" @click="finish">我学会了！获得 3 星 + 10 金币</button>
       </template>
@@ -55,6 +56,8 @@ function goHome() {
 <style scoped>
 .page { min-height: 100vh; background: #fff8e8; }
 .stage { padding: 24px 20px; display: grid; gap: 24px; }
+.lesson-intro { display: grid; gap: 4px; padding: 16px 18px; border-radius: 18px; background: #fff6cd; color: #536980; }
+.lesson-intro small { color: #8b98a8; font-size: 12px; }
 .finish-btn { width: 100%; padding: 16px; border-radius: 18px; background: #68c986; color: #fff; font-size: 17px; font-weight: 700; box-shadow: 0 5px 0 #48ad69; }
 .done-panel { display: grid; justify-items: center; gap: 14px; padding: 40px 24px; border-radius: 24px; background: #fff; box-shadow: 0 6px 0 #eee4d2; }
 .trophy { font-size: 72px; }

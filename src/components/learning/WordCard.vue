@@ -31,7 +31,7 @@ function listen() {
 
 <template>
   <div class="word-card">
-    <div class="image">{{ word.word }}</div>
+    <div class="image"><span>{{ word.emoji }}</span></div>
     <div class="word">{{ word.word }}</div>
     <div class="cn">{{ word.cn }}</div>
     <AudioButton :text="word.sentence" :audio-src="word.sentenceAudio" :label="'听句子'" />
@@ -42,7 +42,7 @@ function listen() {
 
 <style scoped>
 .word-card { display: grid; justify-items: center; gap: 10px; padding: 20px; border-radius: 20px; background: #fff; box-shadow: 0 6px 0 #eee4d2; }
-.image { display: grid; place-items: center; width: 120px; height: 120px; border-radius: 20px; background: #fff8e8; font-family: 'Baloo 2', sans-serif; font-size: 28px; color: #ff705d; }
+.image { display: grid; place-items: center; width: 120px; height: 120px; border-radius: 20px; background: #fff8e8; font-family: 'Baloo 2', sans-serif; font-size: 58px; color: #ff705d; }
 .word { font-family: 'Baloo 2', sans-serif; font-size: 36px; font-weight: 800; color: #263b54; }
 .cn { color: #718093; }
 .speak-btn { padding: 12px 24px; border-radius: 30px; background: #ffe66d; color: #8a6d00; font-weight: 700; box-shadow: 0 4px 0 #e5cf5a; }

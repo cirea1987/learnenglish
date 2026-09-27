@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { speak } from '@/utils/speak'
 import { shuffle } from '@/utils/shuffle'
 import { playCorrect, playWrong } from '@/utils/sfx'
@@ -13,6 +13,12 @@ const chosen = ref('')
 const feedback = ref('')
 const showConfetti = ref(false)
 const praiseList = ['Great job!', 'Well done!', 'Awesome!', 'You got it!', 'Perfect!']
+
+watch(() => props.target, () => {
+  chosen.value = ''
+  feedback.value = ''
+  showConfetti.value = false
+})
 
 function playPrompt() {
   speak(`${props.target} says ${props.target.toLowerCase()}`)
