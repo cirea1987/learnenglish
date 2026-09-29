@@ -9,8 +9,17 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-server
 dist-ssr
 *.local
+.env
+.env.*
+!.env.demo
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+.private-data/
 
 # Editor directories and files
 .vscode/*

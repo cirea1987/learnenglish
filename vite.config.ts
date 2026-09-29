@@ -10,4 +10,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    fs: {
+      deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/.private-data/**'],
+    },
+    proxy: {
+      '/api': 'http://127.0.0.1:3001',
+    },
+  },
 })

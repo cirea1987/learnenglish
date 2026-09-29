@@ -55,17 +55,18 @@ export const useRewardStore = defineStore('reward', {
       if (completedLevelCount >= 5) this.addBadge('champion')
     },
     feedPet() {
-      if (this.coins >= 10) {
-        this.coins -= 10
-        this.pet.exp += 20
-        this.pet.hungry = Math.max(0, this.pet.hungry - 1)
-        if (this.pet.exp >= this.pet.nextExp) {
-          this.pet.level += 1
-          this.pet.exp = 0
-          this.pet.nextExp = Math.floor(this.pet.nextExp * 1.5)
-        }
-        this.save()
+      if (this.coins < 10) return false
+
+      this.coins -= 10
+      this.pet.exp += 20
+      this.pet.hungry = Math.max(0, this.pet.hungry - 1)
+      while (this.pet.exp >= this.pet.nextExp) {
+        this.pet.exp -= this.pet.nextExp
+        this.pet.level += 1
+        this.pet.nextExp = Math.floor(this.pet.nextExp * 1.5)
       }
+      this.save()
+      return true
     },
     save() {
       storage.set('reward', this.$state)

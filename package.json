@@ -4,22 +4,37 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "dev": "concurrently -k \"tsx watch server/index.ts\" \"vite --host=127.0.0.1\"",
+    "build": "vue-tsc -b && vite build && tsc -p tsconfig.server.json",
+    "build:demo": "vue-tsc -b && vite build --mode demo",
+    "start": "node dist-server/index.js",
+    "auth:setup": "tsx server/setup-auth.ts",
+    "build:server": "tsc -p tsconfig.server.json",
+    "test:auth": "npm run build:server && node tests/auth.integration.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
     "@rolldown/binding-win32-x64-msvc": "^1.2.9",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "pinia": "^4.0.3",
+    "sql.js": "^1.14.2",
     "vue": "^3.5.42",
     "vue-router": "^5.3.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^24.13.3",
+    "@types/sql.js": "^1.4.11",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/tsconfig": "^0.9.1",
+    "concurrently": "^10.0.5",
+    "tsx": "^4.23.15",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
     "vue-tsc": "^3.3.11"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

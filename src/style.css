@@ -22,3 +22,50 @@
 body { margin: 0; min-width: 320px; background: var(--bg); }
 button { font: inherit; border: 0; cursor: pointer; }
 button:active { transform: scale(.98); }
+
+.app-shell {
+  --theme-primary: #f0648e;
+  --theme-deep: #d94f78;
+  --theme-background: #fff4f7;
+  --theme-soft: #ffe3ec;
+  --theme-shadow: #f2c4d2;
+  min-height: 100vh;
+  background: var(--theme-background);
+}
+
+.app-shell[data-theme='princess'] {
+  --theme-primary: #df4c8d;
+  --theme-deep: #b93672;
+  --theme-background: #fff0f6;
+  --theme-soft: #ffdeec;
+  --theme-shadow: #edb5ce;
+}
+
+.app-shell .page,
+.app-shell .home { background: var(--theme-background); }
+
+.app-shell .bottom-nav a.active,
+.app-shell .primary,
+.app-shell .nav-btn.primary,
+.app-shell .connect,
+.app-shell .start-button,
+.app-shell .reset-btn,
+.app-shell .setting-row input[type='range'] {
+  accent-color: var(--theme-primary);
+}
+
+.app-shell .primary,
+.app-shell .nav-btn.primary,
+.app-shell .connect {
+  background: var(--theme-primary);
+  box-shadow: 0 4px 0 var(--theme-deep);
+}
+
+.app-shell .bottom-nav a.active,
+.app-shell .praise,
+.app-shell .upper,
+.app-shell .letter,
+.app-shell .carriage b,
+.app-shell .image {
+  color: var(--theme-deep);
+}
